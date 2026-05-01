@@ -1,0 +1,1 @@
+Para crear el reloj primero se necesita hacer un circulo con lineas, solamente escribir el numero de lineas y cdar click en "Circulo con lineas", despues, click en reloj y el reloj se plasmara en el canvas.

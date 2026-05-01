@@ -1,0 +1,13 @@
+#miCanvas {
+    border: 1px solid black;
+    display: block;
+}
+#controles-linea{
+    display: flex;
+    gap: 10px;
+    margin: 5px 0;
+}  
+
+#controles-linea input{
+    width: 105px;
+}

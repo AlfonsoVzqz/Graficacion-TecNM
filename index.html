@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>Graficacion</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        
+        <h1>Mi canvas Graficacion</h1>
+
+        <div>
+            <button id="btnPunto">Punto</button>
+            <button id="btnLinea">Linea</button>
+            <button id="DibujarRect">Rectangulo</button>
+            <button id="DibujarCirc">Circulo</button>
+            <button id="DibujarTri">Trinagulo</button>
+            <button id="DibujarPol">Poligono</button>
+            <button id="PlanoCart">Plano Cartesiano</button>
+            <button id="btnLimpiar">Limpiar</button>
+        </div>
+
+        <div id="controles-linea">
+            <input id="inputx1" type="number" placeholder="x1">
+            <input id="inputy1" type="number" placeholder="y1">
+            <input id="inputx2" type="number" placeholder="x2">
+            <input id="inputy2" type="number" placeholder="y2">
+            <button id="lineaUsuario">Dibujar Linea</button>
+        </div>
+
+        <div>
+            <button id="dibujarEstrella">Dibujar Estrella</button>
+            <input id="manecillas" type="number" placeholder="Cantidad de lineas">
+            <button id="reloj">Circulo con Lineas</button>
+            <button id="btnEliminarlineas">Reloj</button>
+        </div>
+        
+        <div>
+            <input id="inputHoras" type="number" placeholder="Horas" min="0" max="23">
+            <input id="inputMinutos" type="number" placeholder="Minutos" min="0" max="59">
+            <input id="inputSegundos" type="number" placeholder="Segundos" min="0" max="59">
+            <button id="btnHora">Poner Hora</button>
+        </div>
+
+        <canvas id="miCanvas" width="500" height="500"></canvas>
+        
+        <script src="script.js"></script>
+
+    </body>
+</html>
