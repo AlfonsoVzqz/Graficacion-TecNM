@@ -1,7 +1,7 @@
 // eventos.js - Conexión de botones con funciones
-// IMPORTANTE: este archivo debe cargarse ÚLTIMO en el index.html
 
-const GRADOS_ESTRELLA = 5; // <-- aquí defines cuántos grados gira cada click
+
+const GRADOS_ESTRELLA = 5; 
 
 document.getElementById("btnLimpiar").addEventListener("click", borrarCanvas);
 
@@ -70,3 +70,4 @@ document.getElementById("btnHora").addEventListener("click", () => {
     DibujarCircunferencia();
     DibujarManecillas(h, m, s);
 });
+

@@ -46,6 +46,19 @@
             <input id="inputSegundos" type="number" placeholder="Segundos" min="0" max="59">
             <button id="btnHora">Poner Hora</button>
         </div>
+        <div>
+            <button id="dibujarcubo" onclick="drawCube()">Dibujar cubo</button>
+            <button id="rotarCuboX" onclick="rotateCube('X', 5)">Rotar en X</button>
+            <button id="rotarCuboY" onclick="rotateCube('Y', 5)">Rotar en Y</button>
+            <button id="rotarCuboZ" onclick="rotateCube('Z', 5)">Rotar en Z</button>
+            <button id="dibujarSombra" onclick=drawCubeShadow()>Sombra</button>
+        </div>
+        <div>
+            <button id="dibujarprisma" onclick="drawPrism()">Dibujar prisma</button>
+            <button id="rotarPrismaX" onclick="rotatePrism('X', 5)">Rotar en X</button>
+            <button id="rotarPrismaY" onclick="rotatePrism('Y', 5)">Rotar en Y</button>
+            <button id="rotarPrismaZ" onclick="rotatePrism('Z', 5)">Rotar en Z</button>
+        </div>
 
         <canvas id="miCanvas" width="500" height="500"></canvas>
         
@@ -54,7 +67,10 @@
         <script src="scripts/estrella.js"></script>
         <script src="scripts/plano.js"></script>
         <script src="scripts/reloj.js"></script>
+        <script src="scripts/cubo.js"></script>
+        <script src="scripts/prisma.js"></script>
         <script src="scripts/eventos.js"></script>
+        
 
     </body>
 </html>
