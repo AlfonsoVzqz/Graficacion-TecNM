@@ -76,5 +76,88 @@ function rotateCube(axis, angle) {
     drawCube();
 }
 
+function convexHull2D(pts) {
+    if (pts.length < 3) return pts.slice();
+    let lo = 0;
+    for (let i = 1; i < pts.length; i++)
+        if (pts[i].x < pts[lo].x || (pts[i].x === pts[lo].x && pts[i].y < pts[lo].y)) lo = i;
+    const hull = [];
+    let cur = lo;
+    do {
+        hull.push(pts[cur]);
+        let nxt = (cur + 1) % pts.length;
+        for (let i = 0; i < pts.length; i++) {
+            const cross = (pts[nxt].x - pts[cur].x) * (pts[i].y - pts[cur].y)
+                        - (pts[nxt].y - pts[cur].y) * (pts[i].x - pts[cur].x);
+            if (cross < 0) nxt = i;
+        }
+        cur = nxt;
+    } while (cur !== lo && hull.length <= pts.length);
+    return hull;
+}
+
+function drawCubeShadow() {
+    const cx = canvas.width / 2;
+    const cy = canvas.height / 2;
+    borrarCanvas();
+    DibujarPlano();
+
+    // Fuente de luz puntual en coordenadas 3D matemáticas (arriba-izquierda)
+    const light = { x: -200, y: 400, z: -150 };
+    // Plano del piso: y = -(half + 30) en coordenadas matemáticas
+    const groundY = -(half + 80);
+
+    // Proyectar cada vértice del cubo sobre el plano del piso desde la fuente de luz
+    const shadowPts = cubeVertices.map(v => {
+        const dy = v.y - light.y;
+        if (Math.abs(dy) < 0.001) return null;
+        const t = (groundY - light.y) / dy;
+        if (t < 0) return null;
+        const sx = light.x + t * (v.x - light.x);
+        const sz = light.z + t * (v.z - light.z);
+        // Proyección oblicua del piso: z contribuye a x e y para dar sensación 3D
+        return {
+            x: cx + sx + sz * 0.3,
+            y: (cy - groundY) - sz * 0.2
+        };
+    }).filter(p => p !== null);
+
+    if (shadowPts.length >= 3) {
+        const hull = convexHull2D(shadowPts);
+        ctx.save();
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+        ctx.beginPath();
+        ctx.moveTo(hull[0].x, hull[0].y);
+        for (let i = 1; i < hull.length; i++) ctx.lineTo(hull[i].x, hull[i].y);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+    }
+
+    // Dibujar indicador de la fuente de luz (clampeado al canvas si queda fuera)
+    const lightCanvasX = Math.max(8, Math.min(canvas.width - 8, cx + light.x));
+    const lightCanvasY = Math.max(8, Math.min(canvas.height - 8, cy - light.y));
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(lightCanvasX, lightCanvasY, 7, 0, Math.PI * 2);
+    ctx.fillStyle = 'yellow';
+    ctx.fill();
+    ctx.strokeStyle = 'orange';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.restore();
+
+    // Dibujar el cubo encima de la sombra
+    const facesToDraw = cubeFaces.map(face => {
+        const projected = face.indices.map(i => project3D(cubeVertices[i], cx, cy));
+        const avgZ = projected.reduce((sum, p) => sum + p.z, 0) / projected.length;
+        return { face, projected, avgZ };
+    });
+    facesToDraw.sort((a, b) => a.avgZ - b.avgZ);
+    for (const { face, projected } of facesToDraw) {
+        Poligono(projected.map(p => ({ x: p.x, y: p.y })), face.color);
+    }
+}
+
 
 
